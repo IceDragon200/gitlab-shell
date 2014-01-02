@@ -23,14 +23,6 @@ class GitlabConfig
     @config['http_settings'] ||= {}
   end
 
-  def redis
-    @config['redis'] ||= {}
-  end
-
-  def redis_namespace
-    redis['namespace'] || 'resque:gitlab'
-  end
-
   def log_file
     @config['log_file'] ||= File.join(ROOT_PATH, 'gitlab-shell.log')
   end
@@ -43,18 +35,4 @@ class GitlabConfig
     @config['audit_usernames'] ||= false
   end
 
-  # Build redis command to write update event in gitlab queue
-  def redis_command
-    if redis.empty?
-      # Default to old method of connecting to redis
-      # for users that haven't updated their configuration
-      %W(env -i redis-cli)
-    else
-      if redis.has_key?("socket")
-        %W(#{redis['bin']} -s #{redis['socket']})
-      else
-        %W(#{redis['bin']} -h #{redis['host']} -p #{redis['port']})
-      end
-    end
-  end
 end

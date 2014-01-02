@@ -30,9 +30,3 @@ dirs.each do |dir|
   end
   puts "\n"
 end
-
-print "Test redis-cli executable: "
-abort('FAILED') unless system(*config.redis_command, '--version')
-
-print "Send ping to redis server: "
-abort unless system(*config.redis_command, 'ping')
