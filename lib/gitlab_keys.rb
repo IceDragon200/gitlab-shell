@@ -15,9 +15,9 @@ class GitlabKeys
 
   def exec
     case @command
-    when 'add-key'; add_key
-    when 'rm-key';  rm_key
-    when 'clear';  clear
+    when 'add-key' then add_key
+    when 'rm-key'  then rm_key
+    when 'clear'   then clear
     else
       $logger.warn "Attempt to execute invalid gitlab-keys command #{@command.inspect}."
       puts 'not allowed'

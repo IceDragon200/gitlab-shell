@@ -25,16 +25,16 @@ class GitlabProjects
 
   def exec
     case @command
-    when 'create-branch'; create_branch
-    when 'rm-branch'; rm_branch
-    when 'create-tag'; create_tag
-    when 'rm-tag'; rm_tag
-    when 'add-project'; add_project
-    when 'rm-project';  rm_project
-    when 'mv-project';  mv_project
-    when 'import-project'; import_project
-    when 'fork-project'; fork_project
-    when 'update-head';  update_head
+    when 'create-branch'  then create_branch
+    when 'rm-branch'      then rm_branch
+    when 'create-tag'     then create_tag
+    when 'rm-tag'         then rm_tag
+    when 'add-project'    then add_project
+    when 'rm-project'     then rm_project
+    when 'mv-project'     then mv_project
+    when 'import-project' then import_project
+    when 'fork-project'   then fork_project
+    when 'update-head'    then update_head
     else
       $logger.warn "Attempt to execute invalid gitlab-projects command #{@command.inspect}."
       puts 'not allowed'
