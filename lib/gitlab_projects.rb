@@ -73,7 +73,7 @@ class GitlabProjects
   def add_project
     $logger.info "Adding project #{@project_name} at <#{full_path}>."
     FileUtils.mkdir_p(full_path, mode: 0770)
-    cmd = %W(git --git-dir=#{full_path} init --bare)
+    cmd = %W(git --git-dir=#{full_path} init --bare --shared)
     system(*cmd) && create_hooks(full_path)
   end
 
@@ -93,7 +93,7 @@ class GitlabProjects
   def import_project
     @source = ARGV.shift
     $logger.info "Importing project #{@project_name} from <#{@source}> to <#{full_path}>."
-    cmd = %W(git clone --bare -- #{@source} #{full_path})
+    cmd = %W(git clone --bare --shared -- #{@source} #{full_path})
     system(*cmd) && create_hooks(full_path)
   end
 
