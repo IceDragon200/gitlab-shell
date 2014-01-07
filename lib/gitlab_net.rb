@@ -36,7 +36,7 @@ class GitlabNet
   end
 
   def host
-    "#{config.gitlab_url}/api/v3/internal"
+    "#{config.gitlab_url}/api/git"
   end
 
   def get(url)
