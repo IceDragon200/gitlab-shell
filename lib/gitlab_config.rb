@@ -7,14 +7,6 @@ class GitlabConfig
     @config = YAML.load_file(File.join(ROOT_PATH, 'config.yml'))
   end
 
-  def repos_group
-    @config['repos_group'] ||= 'git'
-  end
-
-  def repos_owner
-    @config['repos_owner'] ||= @config['user'] || 'git'
-  end
-
   def repos_path
     @config['repos_path'] ||= "/home/git/repositories"
   end

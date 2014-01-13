@@ -73,7 +73,6 @@ class GitlabProjects
   def add_project
     $logger.info "Adding project #{@project_name} at <#{full_path}>."
     FileUtils.mkdir_p(full_path, mode: 0775)
-    chown_full_path
     cmd = %W(git --git-dir=#{full_path} init --bare --shared)
     system(*cmd) && create_hooks(full_path)
   end
@@ -95,7 +94,6 @@ class GitlabProjects
     @source = ARGV.shift
     $logger.info "Importing project #{@project_name} from <#{@source}> to <#{full_path}>."
     cmd = %W(git clone --bare --shared -- #{@source} #{full_path})
-    chown_full_path
     system(*cmd) && create_hooks(full_path)
   end
 
@@ -158,7 +156,6 @@ class GitlabProjects
 
     $logger.info "Forking project from <#{full_path}> to <#{full_destination_path}>."
     cmd = %W(git clone --bare --shared -- #{full_path} #{full_destination_path})
-    chown_full_path(full_destination_path)
     system(*cmd) && create_hooks(full_destination_path)
   end
 
@@ -176,15 +173,6 @@ class GitlabProjects
 
     $logger.info "Update head in project #{project_name} to <#{new_head}>."
     true
-  end
- private
-
-  def chown_full_path(pth=full_path)
-    FileUtils.chown_R(config.repos_owner, config.repos_group, pth)
-  end
-
-  def config
-    @config ||= GitlabConfig.new
   end
 
 end
