@@ -77,10 +77,12 @@ class GitlabProjects
     system(*cmd) && create_hooks(full_path)
   end
 
-  def create_hooks(path)
-    hook = File.join(path, 'hooks', 'update')
-    File.delete(hook) if File.exists?(hook)
-    File.symlink(File.join(ROOT_PATH, 'hooks', 'update'), hook)
+  def create_hooks(repopath)
+    Dir.glob(File.join(ROOT_PATH, "hooks", "*")).each do |hookname|
+      hook = File.join(repopath, 'hooks', File.basename(hookname))
+      File.delete(hook) if File.exists?(hook)
+      File.symlink(hookname, hook)
+    end
   end
 
   def rm_project
